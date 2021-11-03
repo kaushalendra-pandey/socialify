@@ -1,4 +1,5 @@
 import Image from "next/image"
+import {signIn, signOut, useSession} from "next-auth/react"
 import {
     SearchIcon,
     UserGroupIcon,
@@ -11,6 +12,10 @@ import {
 import {HomeIcon} from "@heroicons/react/solid"
 
 function Header() {
+
+    const {data: session} = useSession()
+     console.log(">>>>>>>>>",session)
+
     return (
         <div className="shadow-sm border-b bg-white sticky-top top-0 z-50" >
             <div className="flex justify-between bg-white max-w-6xl mx-5 lg:mx-auto">
@@ -43,13 +48,29 @@ function Header() {
                 <div className="flex items-center justify-end space-x-4">
                     <HomeIcon className="h-10 w-10"/>                
                     <MenuIcon className="h-6 md:hidden"/>
-                    <PaperAirplaneIcon className="h-10 rotate-45 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/> 
-                    <PlusCircleIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>  
-                    <UserGroupIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>  
-                    <HeartIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>               
-                    <img src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg" 
-                    alt="profile-pic" 
-                    className="h-10 rounded-full cursor-pointer" />
+
+                    {
+                        session ? ( 
+                            <>
+                                {/* <div className="relative h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"> */}
+                                    <PaperAirplaneIcon className="h-10 rotate-45 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/> 
+                                    <PlusCircleIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>  
+                                    <UserGroupIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>  
+                                    <HeartIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>               
+                                    
+                                    <img src={session?.user?.image} 
+                                    onClick={() => signOut()}
+                                    alt="profile-pic" 
+                                    className="h-10 w-10 rounded-full cursor-pointer" />
+                                {/* </div> */}
+                            
+                            </>
+                        ) : (
+                            <button onClick={signIn}> Sign in </button>
+                        )
+                    }
+
+                   
                 </div>
                 
                 
