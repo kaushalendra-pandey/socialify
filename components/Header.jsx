@@ -8,14 +8,15 @@ import {
     MenuIcon,
     PlusCircleIcon
 } from "@heroicons/react/outline"
-
 import {HomeIcon} from "@heroicons/react/solid"
+import {modalState} from "../atoms/modelAtom"
+import {useRecoilState} from "recoil"
 
 function Header() {
 
     const {data: session} = useSession()
      console.log(">>>>>>>>>",session)
-
+    const [open,setOpen] = useRecoilState(modalState)
     return (
         <div className="shadow-sm border-b bg-white sticky-top top-0 z-50" >
             <div className="flex justify-between bg-white max-w-6xl mx-5 lg:mx-auto">
@@ -54,7 +55,7 @@ function Header() {
                             <>
                                 {/* <div className="relative h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"> */}
                                     <PaperAirplaneIcon className="h-10 rotate-45 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/> 
-                                    <PlusCircleIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>  
+                                    <PlusCircleIcon onClick={() => setOpen(true)} className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>  
                                     <UserGroupIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>  
                                     <HeartIcon className="h-10 w-10 hidden cursor-pointer hover:scale-125 md:inline-flex transition-all duration-150 ease-out"/>               
                                     
